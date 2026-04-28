@@ -187,7 +187,7 @@ zmk-config/
 
 ## Documentation
 
-- [Keymap Editor Tutorial](docs/KEYMAP_EDITOR_TUTORIAL.md) — how to remap keys, add combos, behaviors and macros without editing code
+- [Keymap Editor Tutorial](keymap-editor-tutorial.md) — how to remap keys, add combos, behaviors and macros without editing code
 
 ---
 
