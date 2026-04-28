@@ -76,19 +76,19 @@ Activates automatically when **Lower + Raise are held simultaneously** (no extra
 
 All combos work on the Base layer. Press both keys within 50ms.
 
-| Keys | Output | Notes |
-|------|--------|-------|
-| `R` + `T` | `=` | |
-| `E` + `R` | `+` | |
-| `S` + `D` | `[` | |
-| `A` + `S` | `{` | |
-| `F` + `G` | `]` | |
-| `J` + `K` | `}` | |
-| `U` + `I` | `(` | New |
-| `I` + `O` | `)` | New |
-| `O` + `P` | `Backspace` | New |
-| `P` + `-` | `Delete` | New |
-| `Q` + `W` | `Escape` | Useful with homerow mods |
+| Keys | Output |
+|------|--------|
+| `R` + `T` | `=` |
+| `E` + `R` | `+` |
+| `S` + `D` | `[` |
+| `A` + `S` | `{` |
+| `F` + `G` | `]` |
+| `J` + `K` | `}` |
+| `U` + `I` | `(` |
+| `I` + `O` | `)` |
+| `Q` + `W` | `Escape` |
+
+> **Note:** Backspace and Delete combos are not included in this keymap by default.
 
 ---
 
@@ -97,6 +97,8 @@ All combos work on the Base layer. Press both keys within 50ms.
 | Key | Single tap | Double tap |
 |-----|-----------|------------|
 | Bottom-left (was Shift) | `Shift` | `Caps Lock` |
+| `[` (left bracket) | `[` | `{` |
+| `]` (right bracket) | `]` | `}` |
 
 ---
 
