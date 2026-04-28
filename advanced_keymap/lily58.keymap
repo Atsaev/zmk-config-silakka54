@@ -1,0 +1,283 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Silakka54 Advanced Keymap
+ * Based on Lily58 shield — 4 positions marked &none are not present on Silakka54
+ *
+ * Layers:
+ *   0 - Base    : QWERTY + homerow mods (GACS on both hands)
+ *   1 - Lower   : Symbols + BT + Media
+ *   2 - Raise   : Numpad + Navigation + F-keys
+ *   3 - Adjust  : System (activates when Lower + Raise held simultaneously)
+ *
+ * Homerow mods (Base layer, home row):
+ *   Left:  A=GUI  S=ALT  D=CTRL  F=SHIFT
+ *   Right: J=SHIFT  K=CTRL  L=ALT  ;=GUI
+ *
+ * Combos:
+ *   R+T  = =
+ *   E+R  = +
+ *   S+D  = [
+ *   A+S  = {
+ *   F+G  = ]
+ *   J+K  = }
+ *   U+I  = (
+ *   I+O  = )
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+/ {
+    behaviors {
+        // Homerow mod: tap = key, hold = modifier
+        // Using "balanced" flavor — good for both typing and shortcuts
+        hml: homerow_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MOD_LEFT";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <
+                6 7 8 9 10 11
+                18 19 20 21 22 23
+                30 31 32 33 34 35
+                44 45 46 47 48 49
+                39 40 41
+            >;
+            hold-trigger-on-release;
+            bindings = <&kp>, <&kp>;
+        };
+
+        hmr: homerow_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MOD_RIGHT";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <
+                0 1 2 3 4 5
+                12 13 14 15 16 17
+                24 25 26 27 28 29
+                36 37 38 39 40 41
+                36 37 38
+            >;
+            hold-trigger-on-release;
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Tap-dance: single = Shift, double = Caps Lock
+        td_caps: tap_dance_caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_CAPS";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LSHIFT>, <&kp CAPS>;
+        };
+
+        // Tap-dance: single = [, double = {
+        td_lbkt: tap_dance_lbkt {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_LBKT";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LBKT>, <&kp LBRC>;
+        };
+
+        // Tap-dance: single = ], double = }
+        td_rbkt: tap_dance_rbkt {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_RBKT";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp RBKT>, <&kp RBRC>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        // Top row combos
+        com_eq {
+            bindings = <&kp EQUAL>;
+            key-positions = <19 18>;
+            timeout-ms = <50>;
+        };
+
+        com_plus {
+            bindings = <&kp PLUS>;
+            key-positions = <16 17>;
+            timeout-ms = <50>;
+        };
+
+        // Left hand bracket combos
+        com_lbrac {
+            bindings = <&kp LEFT_BRACKET>;
+            key-positions = <29 28>;
+            timeout-ms = <50>;
+        };
+
+        com_lbrace {
+            bindings = <&kp LEFT_BRACE>;
+            key-positions = <41 40>;
+            timeout-ms = <50>;
+        };
+
+        // Right hand bracket combos
+        com_rbrack {
+            bindings = <&kp RIGHT_BRACKET>;
+            key-positions = <30 31>;
+            timeout-ms = <50>;
+        };
+
+        com_rbrace {
+            bindings = <&kp RIGHT_BRACE>;
+            key-positions = <44 45>;
+            timeout-ms = <50>;
+        };
+
+        // Parentheses on right hand top row
+        com_lpar {
+            bindings = <&kp LEFT_PARENTHESIS>;
+            key-positions = <7 8>;
+            timeout-ms = <50>;
+        };
+
+        com_rpar {
+            bindings = <&kp RIGHT_PARENTHESIS>;
+            key-positions = <8 9>;
+            timeout-ms = <50>;
+        };
+
+        // Escape combo — Q+W (useful with homerow mods)
+        com_esc {
+            bindings = <&kp ESCAPE>;
+            key-positions = <13 14>;
+            timeout-ms = <50>;
+        };
+
+        // Backspace combo — right hand
+        com_bspc {
+            bindings = <&kp BACKSPACE>;
+            key-positions = <9 10>;
+            timeout-ms = <50>;
+        };
+
+        // Delete combo
+        com_del {
+            bindings = <&kp DELETE>;
+            key-positions = <10 11>;
+            timeout-ms = <50>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // ─────────────────────────────────────────────────────────────────
+        // Layer 0: Base — QWERTY with homerow mods
+        // Tap  = letter
+        // Hold = modifier (GUI / ALT / CTRL / SHIFT)
+        // ─────────────────────────────────────────────────────────────────
+        base_layer {
+            display-name = "Base";
+            bindings = <
+// ╭─────────────┬────────────┬────────────┬────────────┬────────────┬────────────╮                       ╭────────────┬────────────┬────────────┬────────────┬────────────┬─────────────╮
+    &kp ESC        &kp N1       &kp N2       &kp N3       &kp N4       &kp N5                               &kp N6       &kp N7       &kp N8       &kp N9       &kp N0       &kp GRAVE
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &kp TAB        &kp Q        &kp W        &kp E        &kp R        &kp T                                &kp Y        &kp U        &kp I        &kp O        &kp P        &kp MINUS
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &mo 2          &hml LGUI A  &hml LALT S  &hml LCTRL D &hml LSHFT F &kp G                               &kp H        &hmr RSHFT J &hmr RCTRL K &hmr RALT L  &hmr RGUI SEMI &kp SQT
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮ ╭────────┼────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &td_caps       &kp Z        &kp X        &kp C        &kp V        &kp B        &none            &none  &kp N        &kp M        &kp COMMA    &kp PERIOD   &kp FSLH     &kp BSLH
+// ╰─────────────┴────────────┴────────────┼────────────┼────────────┼────────────┼────────────┤ ├────────┼────────────┼────────────┼────────────┼────────────┴────────────┴─────────────╯
+                                             &kp LGUI     &mo 1        &kp SPACE    &none            &none  &kp RET      &mo 2        &kp BSPC
+//                                         ╰────────────┴────────────┴────────────┴────────────╯ ╰────────┴────────────┴────────────┴────────────╯
+            >;
+        };
+
+        // ─────────────────────────────────────────────────────────────────
+        // Layer 1: Lower — Symbols + Bluetooth + Media
+        // ─────────────────────────────────────────────────────────────────
+        lower_layer {
+            display-name = "Lower";
+            bindings = <
+// ╭─────────────┬────────────┬────────────┬────────────┬────────────┬────────────╮                       ╭────────────┬────────────┬────────────┬────────────┬────────────┬─────────────╮
+    &bt BT_CLR     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                       &out OUT_USB &out OUT_BLE &trans       &trans       &trans       &bt BT_CLR_ALL
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &kp EXCL     &kp AT       &kp HASH     &kp DLLR     &kp PRCNT                            &kp CARET    &kp AMPS     &kp STAR     &kp LPAR     &kp RPAR     &kp TILDE
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &kp GRAVE    &kp MINUS    &kp EQUAL    &kp LBKT     &kp RBKT                             &kp PIPE     &kp UNDER    &kp PLUS     &kp LBRC     &kp RBRC     &kp DQT
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮ ╭────────┼────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &kp C_PREV   &kp C_NEXT   &kp C_PP     &kp C_VOL_DN &kp C_VOL_UP &none          &none   &kp C_MUTE   &kp F1       &kp F2       &kp F3       &kp F4       &kp F5
+// ╰─────────────┴────────────┴────────────┼────────────┼────────────┼────────────┼────────────┤ ├────────┼────────────┼────────────┼────────────┼────────────┴────────────┴─────────────╯
+                                             &trans       &trans       &trans       &none            &none  &kp F6       &kp F7       &kp F8
+//                                         ╰────────────┴────────────┴────────────┴────────────╯ ╰────────┴────────────┴────────────┴────────────╯
+            >;
+        };
+
+        // ─────────────────────────────────────────────────────────────────
+        // Layer 2: Raise — Numpad + Navigation + F-keys
+        // ─────────────────────────────────────────────────────────────────
+        raise_layer {
+            display-name = "Raise";
+            bindings = <
+// ╭─────────────┬────────────┬────────────┬────────────┬────────────┬────────────╮                       ╭────────────┬────────────┬────────────┬────────────┬────────────┬─────────────╮
+    &trans         &kp F1       &kp F2       &kp F3       &kp F4       &kp F5                               &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &kp F11
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &trans       &trans       &kp HOME     &kp END      &trans                               &kp KP_SLASH &kp N7       &kp N8       &kp N9       &kp KP_MINUS &kp F12
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &trans       &trans       &kp PG_UP    &kp PG_DN    &trans                               &kp KP_STAR  &kp N4       &kp N5       &kp N6       &kp KP_PLUS  &trans
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮ ╭────────┼────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &trans       &trans       &kp LEFT     &kp RIGHT    &trans       &none            &none  &kp N0       &kp N1       &kp N2       &kp N3       &kp UP       &kp KP_ENTER
+// ╰─────────────┴────────────┴────────────┼────────────┼────────────┼────────────┼────────────┤ ├────────┼────────────┼────────────┼────────────┼────────────┴────────────┴─────────────╯
+                                             &trans       &trans       &kp DOWN     &none            &none  &trans       &trans       &kp KP_DOT
+//                                         ╰────────────┴────────────┴────────────┴────────────╯ ╰────────┴────────────┴────────────┴────────────╯
+            >;
+        };
+
+        // ─────────────────────────────────────────────────────────────────
+        // Layer 3: Adjust — activates when Lower + Raise held together
+        // System controls, RGB (if present), keyboard reset
+        // ─────────────────────────────────────────────────────────────────
+        adjust_layer {
+            display-name = "Adjust";
+            bindings = <
+// ╭─────────────┬────────────┬────────────┬────────────┬────────────┬────────────╮                       ╭────────────┬────────────┬────────────┬────────────┬────────────┬─────────────╮
+    &sys_reset     &trans       &trans       &trans       &trans       &trans                               &trans       &trans       &trans       &trans       &trans       &sys_reset
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &bootloader    &trans       &trans       &trans       &trans       &trans                               &trans       &trans       &trans       &trans       &trans       &bootloader
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┤                       ├────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &trans       &trans       &trans       &trans       &trans                               &trans       &trans       &trans       &trans       &trans       &trans
+// ├─────────────┼────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮ ╭────────┼────────────┼────────────┼────────────┼────────────┼────────────┼─────────────┤
+    &trans         &trans       &trans       &trans       &trans       &trans       &none            &none  &trans       &trans       &trans       &trans       &trans       &trans
+// ╰─────────────┴────────────┴────────────┼────────────┼────────────┼────────────┼────────────┤ ├────────┼────────────┼────────────┼────────────┼────────────┴────────────┴─────────────╯
+                                             &trans       &trans       &trans       &none            &none  &trans       &trans       &trans
+//                                         ╰────────────┴────────────┴────────────┴────────────╯ ╰────────┴────────────┴────────────┴────────────╯
+            >;
+        };
+
+        extra_1 { status = "reserved"; };
+        extra_2 { status = "reserved"; };
+        extra_3 { status = "reserved"; };
+    };
+
+    // ─────────────────────────────────────────────────────────────────
+    // Conditional layer: Lower + Raise = Adjust
+    // ─────────────────────────────────────────────────────────────────
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        adjust {
+            if-layers = <1 2>;
+            then-layer = <3>;
+        };
+    };
+};
