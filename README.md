@@ -185,6 +185,12 @@ zmk-config/
 
 ---
 
+## Documentation
+
+- [Keymap Editor Tutorial](docs/KEYMAP_EDITOR_TUTORIAL.md) — how to remap keys, add combos, behaviors and macros without editing code
+
+---
+
 ## Contributing
 
 Found a bug or have a keymap idea? Open an issue or a pull request — all contributions are welcome.
