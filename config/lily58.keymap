@@ -11,6 +11,20 @@
  *   1 - Lower   : Symbols + BT + Media
  *   2 - Raise   : Numpad + Navigation + F-keys
  *   3 - Adjust  : System (activates when Lower + Raise held simultaneously)
+ *
+ * Homerow mods (Base layer, home row):
+ *   Left:  A=GUI  S=ALT  D=CTRL  F=SHIFT
+ *   Right: J=SHIFT  K=CTRL  L=ALT  ;=GUI
+ *
+ * Combos:
+ *   R+T  = =
+ *   E+R  = +
+ *   S+D  = [
+ *   A+S  = {
+ *   F+G  = ]
+ *   J+K  = }
+ *   U+I  = (
+ *   I+O  = )
  */
 
 #include <behaviors.dtsi>
@@ -20,6 +34,8 @@
 
 / {
     behaviors {
+        // Homerow mod: tap = key, hold = modifier
+        // Using "balanced" flavor — good for both typing and shortcuts
         hml: homerow_mod_left {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MOD_LEFT";
@@ -57,6 +73,7 @@
             bindings = <&kp>, <&kp>;
         };
 
+        // Tap-dance: single = Shift, double = Caps Lock
         td_caps: tap_dance_caps {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_CAPS";
@@ -69,6 +86,7 @@
     combos {
         compatible = "zmk,combos";
 
+        // Top row combos
         com_eq {
             bindings = <&kp EQUAL>;
             key-positions = <19 18>;
@@ -81,6 +99,7 @@
             timeout-ms = <50>;
         };
 
+        // Left hand bracket combos
         com_lbrac {
             bindings = <&kp LEFT_BRACKET>;
             key-positions = <29 28>;
@@ -93,6 +112,7 @@
             timeout-ms = <50>;
         };
 
+        // Right hand bracket combos
         com_rbrack {
             bindings = <&kp RIGHT_BRACKET>;
             key-positions = <30 31>;
@@ -105,6 +125,7 @@
             timeout-ms = <50>;
         };
 
+        // Parentheses on right hand top row
         com_lpar {
             bindings = <&kp LEFT_PARENTHESIS>;
             key-positions = <7 8>;
@@ -117,18 +138,21 @@
             timeout-ms = <50>;
         };
 
+        // Escape combo — Q+W (useful with homerow mods)
         com_esc {
             bindings = <&kp ESCAPE>;
             key-positions = <13 14>;
             timeout-ms = <50>;
         };
 
+        // Backspace combo — right hand
         com_bspc {
             bindings = <&kp BACKSPACE>;
             key-positions = <9 10>;
             timeout-ms = <50>;
         };
 
+        // Delete combo
         com_del {
             bindings = <&kp DELETE>;
             key-positions = <10 11>;
@@ -139,51 +163,56 @@
     keymap {
         compatible = "zmk,keymap";
 
+        // Layer 0: Base — QWERTY with homerow mods
         base_layer {
             display-name = "Base";
             bindings = <
-    &kp ESC,       &kp N1,      &kp N2,      &kp N3,      &kp N4,      &kp N5,                               &kp N6,      &kp N7,      &kp N8,      &kp N9,      &kp N0,       &kp GRAVE
-    &kp TAB,       &kp Q,       &kp W,       &kp E,       &kp R,       &kp T,                                &kp Y,       &kp U,       &kp I,       &kp O,       &kp P,        &kp MINUS
-    &mo 2,         &hml LGUI A, &hml LALT S, &hml LCTRL D,&hml LSHFT F,&kp G,                               &kp H,       &hmr RSHFT J,&hmr RCTRL K,&hmr RALT L, &hmr RGUI SEMI, &kp SQT
-    &td_caps,      &kp Z,       &kp X,       &kp C,       &kp V,       &kp B,       &none,           &none,  &kp N,       &kp M,       &kp COMMA,   &kp PERIOD,  &kp FSLH,     &kp BSLH
-                                           &kp LGUI,     &mo 1,       &kp SPACE,   &none,           &none,  &kp RET,     &mo 2,       &kp BSPC
+    &kp ESC,   &kp N1, &kp N2, &kp N3, &kp N4, &kp N5,                     &kp N6, &kp N7, &kp N8, &kp N9, &kp N0, &kp GRAVE
+    &kp TAB,   &kp Q,  &kp W,  &kp E,  &kp R,  &kp T,                      &kp Y,  &kp U,  &kp I,  &kp O,  &kp P,  &kp MINUS
+    &mo 2,     &hml LGUI A, &hml LALT S, &hml LCTRL D, &hml LSHFT F, &kp G,&kp H,  &hmr RSHFT J, &hmr RCTRL K, &hmr RALT L, &hmr RGUI SEMI, &kp SQT
+    &td_caps,  &kp Z,  &kp X,  &kp C,  &kp V,  &kp B,  &none,     &none,  &kp N,  &kp M,  &kp COMMA, &kp PERIOD, &kp FSLH, &kp BSLH
+                                         &kp LGUI, &mo 1, &kp SPACE, &none,   &none,  &kp RET, &mo 2, &kp BSPC
             >;
         };
 
+        // Layer 1: Lower — Symbols + Bluetooth + Media
         lower_layer {
             display-name = "Lower";
             bindings = <
-    &bt BT_CLR,    &bt BT_SEL0, &bt BT_SEL1, &bt BT_SEL2, &bt BT_SEL3, &bt BT_SEL4,                       &out OUT_USB, &out OUT_BLE, &trans,      &trans,      &trans,      &bt BT_CLR_ALL
-    &trans,        &kp EXCL,    &kp AT,      &kp HASH,    &kp DOLLAR,  &kp PRCNT,                            &kp CARET,   &kp AMPS,    &kp STAR,    &kp LPAR,    &kp RPAR,    &kp TILDE
-    &trans,        &kp GRAVE,   &kp MINUS,   &kp EQUAL,   &kp LBKT,    &kp RBKT,                             &kp PIPE,    &kp UNDERSCORE, &kp PLUS,    &kp LBRC,    &kp RBRC,    &kp DQT
-    &trans,        &kp C_PREV,  &kp C_NEXT,  &kp C_PP,    &kp C_VOL_DN,&kp C_VOL_UP,&none,           &none,  &kp C_MUTE,  &kp F1,      &kp F2,      &kp F3,      &kp F4,      &kp F5
-                                           &trans,       &trans,      &trans,      &none,           &none,  &kp F6,      &kp F7,      &kp F8
+    &bt BT_CLR, &bt BT_SEL0, &bt BT_SEL1, &bt BT_SEL2, &bt BT_SEL3, &bt BT_SEL4, &out OUT_USB, &out OUT_BLE, &trans, &trans, &trans, &bt BT_CLR_ALL
+    &trans,     &kp EXCL,    &kp AT,      &kp HASH,    &kp DOLLAR,  &kp PRCNT,    &kp CARET,    &kp AMPS,     &kp STAR, &kp LPAR, &kp RPAR, &kp TILDE
+    &trans,     &kp GRAVE,   &kp MINUS,   &kp EQUAL,   &kp LBKT,    &kp RBKT,     &kp PIPE,     &kp UNDERSCORE, &kp PLUS, &kp LBRC, &kp RBRC, &kp DQT
+    &trans,     &kp C_PREV,  &kp C_NEXT,  &kp C_PP,    &kp C_VOL_DN,&kp C_VOL_UP, &none,        &none,        &kp C_MUTE, &kp F1, &kp F2, &kp F3
+                                         &trans,       &trans,      &trans,      &none,        &none,        &kp F4,     &kp F5, &kp F6
             >;
         };
 
+        // Layer 2: Raise — Numpad + Navigation + F-keys
         raise_layer {
             display-name = "Raise";
             bindings = <
-    &trans,        &kp F1,      &kp F2,      &kp F3,      &kp F4,      &kp F5,                               &kp F6,      &kp F7,      &kp F8,      &kp F9,      &kp F10,     &kp F11
-    &trans,        &trans,      &trans,      &kp HOME,    &kp END,     &trans,                               &kp KP_SLASH, &kp N7,     &kp N8,      &kp N9,      &kp KP_MINUS, &kp F12
-    &trans,        &trans,      &trans,      &kp PG_UP,   &kp PG_DN,   &trans,                               &kp KP_STAR,  &kp N4,      &kp N5,      &kp N6,      &kp KP_PLUS,  &trans
-    &trans,        &trans,      &trans,      &kp LEFT,    &kp RIGHT,   &trans,      &none,           &none,  &kp N0,      &kp N1,      &kp N2,      &kp N3,      &kp UP,       &kp KP_ENTER
-                                           &trans,       &trans,      &kp DOWN,    &none,           &none,  &trans,      &trans,      &kp KP_DOT
+    &trans, &kp F1, &kp F2, &kp F3, &kp F4, &kp F5,                     &kp F6, &kp F7, &kp F8, &kp F9, &kp F10, &kp F11
+    &trans, &trans, &trans, &kp HOME, &kp END, &trans,                  &kp KP_SLASH, &kp N7, &kp N8, &kp N9, &kp KP_MINUS, &kp F12
+    &trans, &trans, &trans, &kp PG_UP, &kp PG_DN, &trans,               &kp KP_STAR, &kp N4, &kp N5, &kp N6, &kp KP_PLUS, &trans
+    &trans, &trans, &trans, &kp LEFT, &kp RIGHT, &trans, &none, &none,  &kp N0, &kp N1, &kp N2, &kp N3, &kp UP, &kp KP_ENTER
+                                         &trans, &trans, &kp DOWN, &none, &none, &trans, &trans, &kp KP_DOT
             >;
         };
 
+        // Layer 3: Adjust — activates when Lower + Raise held together
         adjust_layer {
             display-name = "Adjust";
             bindings = <
-    &sys_reset,    &trans,      &trans,      &trans,      &trans,      &trans,                               &trans,      &trans,      &trans,      &trans,      &trans,      &sys_reset
-    &bootloader,   &trans,      &trans,      &trans,      &trans,      &trans,                               &trans,      &trans,      &trans,      &trans,      &trans,      &bootloader
-    &trans,        &trans,      &trans,      &trans,      &trans,      &trans,                               &trans,      &trans,      &trans,      &trans,      &trans,      &trans
-    &trans,        &trans,      &trans,      &trans,      &trans,      &trans,      &none,           &none,  &trans,      &trans,      &trans,      &trans,      &trans,      &trans
-                                           &trans,       &trans,      &trans,      &none,           &none,  &trans,      &trans,      &trans
+    &sys_reset, &trans, &trans, &trans, &trans, &trans,                 &trans, &trans, &trans, &trans, &trans, &sys_reset
+    &bootloader, &trans, &trans, &trans, &trans, &trans,                &trans, &trans, &trans, &trans, &trans, &bootloader
+    &trans,     &trans, &trans, &trans, &trans, &trans,                 &trans, &trans, &trans, &trans, &trans, &trans
+    &trans,     &trans, &trans, &trans, &trans, &trans, &none, &none,   &trans, &trans, &trans, &trans, &trans, &trans
+                                         &trans, &trans, &trans, &none, &none, &trans, &trans, &trans
             >;
         };
     };
 
+    // Conditional layer: Lower + Raise = Adjust
     conditional_layers {
         compatible = "zmk,conditional-layers";
         adjust {
