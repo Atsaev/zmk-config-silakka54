@@ -266,12 +266,7 @@
 //                                         ╰────────────┴────────────┴────────────┴────────────╯ ╰────────┴────────────┴────────────┴────────────╯
             >;
         };
-
-        extra_1 { status = "reserved"; };
-        extra_2 { status = "reserved"; };
-        extra_3 { status = "reserved"; };
-    }; // конец keymap
-
+    
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
