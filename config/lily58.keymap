@@ -108,11 +108,11 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &trans  &trans  &trans  &trans            &trans                           &trans            &trans          &trans  &trans  &trans   &trans
-&trans  &trans  &trans  &trans  &kp C_PLAY_PAUSE  &kp C_VOLUME_UP                  &trans            &kp F4          &kp F5  &kp F6  &kp F11  &kp F12
-&trans  &trans  &trans  &trans  &kp C_NEXT        &kp C_VOL_DN                     &kp LEFT_BRACKET  &kp EQUAL       &trans  &trans  &trans   &trans
-&trans  &trans  &trans  &trans  &trans            &trans           &none    &none  &kp UNDER         &kp LEFT_BRACE  &trans  &trans  &trans   &trans
-                        &trans  &trans            &trans           &none    &none  &trans            &trans          &trans
+&trans  &none  &none  &none   &none             &none                            &kp F1            &kp F4             &kp F5           &kp F6  &kp F11  &kp F12
+&trans  &none  &none  &none   &kp C_PLAY_PAUSE  &kp C_VOLUME_UP                  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &none            &none   &none    &none
+&trans  &none  &none  &none   &kp C_NEXT        &kp C_VOL_DN                     &kp EQUAL         &kp PLUS           &kp HASH         &none   &none    &none
+&trans  &none  &none  &none   &none             &none            &none    &none  &kp UNDER         &kp LEFT_BRACE     &kp RIGHT_BRACE  &none   &none    &none
+                      &trans  &trans            &trans           &none    &none  &trans            &trans             &trans
             >;
         };
 
@@ -126,18 +126,12 @@
 
             display-name = "Raise";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans        &trans        &trans        &trans          &trans          &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &trans          &trans          &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &trans          &kp UP_ARROW    &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &none    &none  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW
-                        &trans  &trans  &trans  &none    &none  &trans        &kp N0        &trans
+&trans  &none  &none  &none   &none   &none                   &none         &none         &none         &none           &none           &none
+&trans  &none  &none  &none   &none   &none                   &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &none           &none           &none
+&trans  &none  &none  &none   &none   &none                   &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &none           &kp UP_ARROW    &none
+&trans  &none  &none  &none   &none   &none   &none    &none  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW
+                      &trans  &trans  &trans  &none    &none  &trans        &kp N0        &trans
             >;
         };
-
-        extra_1 { status = "reserved"; };
-
-        extra_2 { status = "reserved"; };
-
-        extra_3 { status = "reserved"; };
     };
 };
