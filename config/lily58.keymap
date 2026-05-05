@@ -13,12 +13,12 @@
 
         com_eq {
             bindings = <&kp EQUAL>;
-            key-positions = <19 18>;
+            key-positions = <17 16>;
         };
 
         com_plus {
             bindings = <&kp PLUS>;
-            key-positions = <16 17>;
+            key-positions = <18 19>;
         };
 
         com_lbrac {
@@ -26,19 +26,9 @@
             key-positions = <29 28>;
         };
 
-        com_lbrace {
-            bindings = <&kp LEFT_BRACE>;
-            key-positions = <41 40>;
-        };
-
         com_rbrack {
             bindings = <&kp RIGHT_BRACKET>;
-            key-positions = <29 28 27>;
-        };
-
-        com_rbrace {
-            bindings = <&kp RIGHT_BRACE>;
-            key-positions = <41 40 39>;
+            key-positions = <30 31>;
         };
     };
 
@@ -67,6 +57,22 @@
             tapping-term-ms = <250>;
             bindings = <&kp PERIOD>, <&kp LS(PERIOD)>;
         };
+
+        beh_brace: beh_brace {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BEH_BRACE";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp N9>, <&kp LEFT_BRACE>;
+        };
+
+        beh_rbrace: beh_rbrace {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BEH_RBRACE";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp N0>, <&kp RIGHT_BRACE>;
+        };
     };
 
     keymap {
@@ -84,11 +90,11 @@
 
             display-name = "Base";
             bindings = <
-&kp ESC         &kp LS(N1)  &kp LS(N2)  &kp LS(N3)  &kp LS(N4)      &kp LS(N5)                  &kp LS(N6)  &kp LS(N7)  &kp LS(N8)  &kp LS(N9)  &kp LS(N0)    &kp GRAVE
-&caps_ctrl_beh  &kp Q       &kp W       &kp E       &kp R           &kp T                       &kp Y       &kp U       &kp I       &kp O       &kp P         &kp LS(MINUS)
-&mo 2           &kp A       &kp S       &kp D       &kp F           &kp G                       &kp H       &kp J       &kp K       &kp L       &kp LS(SEMI)  &kp SQT
-&mo 1           &kp Z       &kp X       &kp C       &kp V           &kp B       &none    &none  &kp N       &kp M       &comma_beh  &dot_beh    &kp FSLH      &kp BACKSLASH
-                                        &kp LGUI    &kp LEFT_SHIFT  &kp SPACE   &none    &none  &kp RET     &kp TAB     &kp DEL
+&kp ESC         &kp N1  &kp N2  &kp N3    &kp N4          &kp N5                     &kp N6   &kp N7   &kp N8      &beh_brace  &beh_rbrace  &kp GRAVE
+&caps_ctrl_beh  &kp Q   &kp W   &kp E     &kp R           &kp T                      &kp Y    &kp U    &kp I       &kp O       &kp P        &kp MINUS
+&mo 2           &kp A   &kp S   &kp D     &kp F           &kp G                      &kp H    &kp J    &kp K       &kp L       &kp SEMI     &kp SQT
+&mo 1           &kp Z   &kp X   &kp C     &kp V           &kp B      &none    &none  &kp N    &kp M    &comma_beh  &dot_beh    &kp FSLH     &kp BACKSLASH
+                                &kp LGUI  &kp LEFT_SHIFT  &kp SPACE  &none    &none  &kp RET  &kp TAB  &kp DEL
             >;
         };
 
@@ -102,11 +108,11 @@
 
             display-name = "Lower";
             bindings = <
-&trans  &trans  &trans  &trans  &trans            &trans                           &trans  &trans  &trans  &trans  &trans   &trans
-&trans  &trans  &trans  &trans  &kp C_PLAY_PAUSE  &kp C_VOLUME_UP                  &trans  &kp F4  &kp F5  &kp F6  &kp F11  &kp F12
-&trans  &trans  &trans  &trans  &kp C_NEXT        &kp C_VOL_DN                     &trans  &trans  &trans  &trans  &trans   &trans
-&trans  &trans  &trans  &trans  &trans            &trans           &none    &none  &trans  &trans  &trans  &trans  &trans   &trans
-                        &trans  &trans            &trans           &none    &none  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans            &trans                           &trans            &trans          &trans  &trans  &trans   &trans
+&trans  &trans  &trans  &trans  &kp C_PLAY_PAUSE  &kp C_VOLUME_UP                  &trans            &kp F4          &kp F5  &kp F6  &kp F11  &kp F12
+&trans  &trans  &trans  &trans  &kp C_NEXT        &kp C_VOL_DN                     &kp LEFT_BRACKET  &kp EQUAL       &trans  &trans  &trans   &trans
+&trans  &trans  &trans  &trans  &trans            &trans           &none    &none  &kp UNDER         &kp LEFT_BRACE  &trans  &trans  &trans   &trans
+                        &trans  &trans            &trans           &none    &none  &trans            &trans          &trans
             >;
         };
 
