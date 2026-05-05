@@ -33,12 +33,39 @@
 
         com_rbrack {
             bindings = <&kp RIGHT_BRACKET>;
-            key-positions = <30 31>;
+            key-positions = <29 28 27>;
         };
 
         com_rbrace {
             bindings = <&kp RIGHT_BRACE>;
-            key-positions = <44 45>;
+            key-positions = <41 40 39>;
+        };
+    };
+
+    behaviors {
+        caps_ctrl_beh: caps_ctrl_beh {
+            compatible = "zmk,behavior-tap-dance";
+            label = "CAPS_CTRL_BEH";
+            #binding-cells = <0>;
+            bindings = <&kp LEFT_CONTROL>, <&kp CAPSLOCK>;
+
+            tapping-term-ms = <250>;
+        };
+
+        comma_beh: comma_beh {
+            compatible = "zmk,behavior-tap-dance";
+            label = "COMMA_BEH";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp COMMA>, <&kp LS(COMMA)>;
+        };
+
+        dot_beh: dot_beh {
+            compatible = "zmk,behavior-tap-dance";
+            label = "DOT_BEH";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp PERIOD>, <&kp LS(PERIOD)>;
         };
     };
 
@@ -57,11 +84,11 @@
 
             display-name = "Base";
             bindings = <
-&kp ESC           &kp N1  &kp N2  &kp N3    &kp N4          &kp N5                     &kp N6   &kp N7   &kp N8     &kp N9      &kp N0        &kp GRAVE
-&kp LEFT_CONTROL  &kp Q   &kp W   &kp E     &kp R           &kp T                      &kp Y    &kp U    &kp I      &kp O       &kp P         &kp MINUS
-&mo 2             &kp A   &kp S   &kp D     &kp F           &kp G                      &kp H    &kp J    &kp K      &kp L       &kp LS(SEMI)  &kp SQT
-&mo 1             &kp Z   &kp X   &kp C     &kp V           &kp B      &none    &none  &kp N    &kp M    &kp COMMA  &kp PERIOD  &kp FSLH      &kp BACKSLASH
-                                  &kp LGUI  &kp LEFT_SHIFT  &kp SPACE  &none    &none  &kp RET  &kp TAB  &kp DEL
+&kp ESC         &kp LS(N1)  &kp LS(N2)  &kp LS(N3)  &kp LS(N4)      &kp LS(N5)                  &kp LS(N6)  &kp LS(N7)  &kp LS(N8)  &kp LS(N9)  &kp LS(N0)    &kp GRAVE
+&caps_ctrl_beh  &kp Q       &kp W       &kp E       &kp R           &kp T                       &kp Y       &kp U       &kp I       &kp O       &kp P         &kp LS(MINUS)
+&mo 2           &kp A       &kp S       &kp D       &kp F           &kp G                       &kp H       &kp J       &kp K       &kp L       &kp LS(SEMI)  &kp SQT
+&mo 1           &kp Z       &kp X       &kp C       &kp V           &kp B       &none    &none  &kp N       &kp M       &comma_beh  &dot_beh    &kp FSLH      &kp BACKSLASH
+                                        &kp LGUI    &kp LEFT_SHIFT  &kp SPACE   &none    &none  &kp RET     &kp TAB     &kp DEL
             >;
         };
 
